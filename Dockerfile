@@ -1,7 +1,7 @@
 FROM registry.redhat.io/ubi8/openjdk-8
 COPY ./ /home/jboss/
 
-USER 1001
+USER jboss
 RUN mvn package
 RUN ls
 EXPOSE 8080
