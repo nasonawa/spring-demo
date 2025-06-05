@@ -28,7 +28,7 @@ public class KubernetesConfig {
     @Qualifier("default")
     public OpenShiftClient openshiftClientConfig() {
         try {
-            logger.info("Configuring OpenShift client with URL: {}, trustCerts: {}, token:{}", openshiftUrl, trustCerts,openshiftToken);
+            logger.info("Configuring OpenShift client with URL: {}, trustCerts: {}", openshiftUrl, trustCerts);
             OpenShiftClient client = new DefaultOpenShiftClient(getConfig());
             logger.info("OpenShift client created successfully");
             return client;

@@ -2,12 +2,14 @@ package com.example.demo;
 
 import io.fabric8.openshift.client.OpenShiftClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeploymentMonitoringService {
     
     @Autowired
+    @Qualifier("default")
     private OpenShiftClient openShiftClient;
 
     /*@Autowired
