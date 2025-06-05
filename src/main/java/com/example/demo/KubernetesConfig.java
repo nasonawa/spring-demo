@@ -6,6 +6,7 @@ import io.fabric8.openshift.client.DefaultOpenShiftClient;
 import io.fabric8.openshift.client.OpenShiftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,15 +25,11 @@ public class KubernetesConfig {
     private boolean trustCerts;
 
     @Bean
+    @Qualifier("default")
     public OpenShiftClient openshiftClientConfig() {
         try {
-            logger.info("Configuring OpenShift client with URL: {}, trustCerts: {}", openshiftUrl, trustCerts);
-            Config config = new ConfigBuilder()
-                    .withMasterUrl(openshiftUrl)
-                    .withOauthToken(openshiftToken)
-                    .withTrustCerts(trustCerts)
-                    .build();
-            OpenShiftClient client = new DefaultOpenShiftClient(config);
+            logger.info("Configuring OpenShift client with URL: {}, trustCerts: {}, token:{}", openshiftUrl, trustCerts,openshiftToken);
+            OpenShiftClient client = new DefaultOpenShiftClient(getConfig());
             logger.info("OpenShift client created successfully");
             return client;
         } catch (Exception e) {
@@ -40,4 +37,13 @@ public class KubernetesConfig {
             throw new RuntimeException("OpenShift client initialization failed", e);
         }
     }
+
+    public Config getConfig() {
+		Config config = new Config();
+		config.setMasterUrl(openshiftUrl);
+		config.setOauthToken(openshiftToken);
+		config.setTrustCerts(trustCerts);
+        config.setWebsocketPingInterval(300 * 1000L);
+		return config;
+	}
 }
