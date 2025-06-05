@@ -5,4 +5,4 @@ USER jboss
 RUN mvn package
 RUN ls target
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/home/jboss/target/demo.jar"]
+ENTRYPOINT ["java","-jar","/home/jboss/target/demo-0.0.1-SNAPSHOT.jar"]
