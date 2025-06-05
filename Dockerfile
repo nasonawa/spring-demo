@@ -3,6 +3,6 @@ COPY ./ /home/jboss/
 
 USER jboss
 RUN mvn package
-RUN ls
+RUN ls target
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/home/jboss/target/demo.jar"]
